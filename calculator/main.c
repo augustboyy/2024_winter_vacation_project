@@ -3,12 +3,13 @@
 #pragma warning (disable : 4996) // for MSVC
 
 #include <stdio.h>
+#include <windows.h>
 #include "menu.h" // declaration of menu enum
 
 #define SIZE(arr) sizeof(arr) / sizeof(arr[0]); // macro for counting array room
 
 void menuDisplay(char** menu, size_t menuCnt);
-int inputInt(void);
+int inputInt(char** menu, size_t menuCnt);
 
 int main(void)
 {
@@ -19,7 +20,7 @@ int main(void)
 	for (;;)
 	{
 		menuDisplay(menu, menuCnt); // function call for display menu
-		menuNum = inputInt(); // function call for input menu number
+		menuNum = inputInt(menu, menuCnt); // function call for input menu number
 
 		switch (menuNum) // execute menu number
 		{
@@ -49,7 +50,7 @@ void menuDisplay(char** menu, size_t menuCnt)
 	return;
 }
 
-int inputInt(void)
+int inputInt(char** menu, size_t menuCnt)
 {
 	int num = 0;
 
@@ -77,7 +78,9 @@ int inputInt(void)
 		}
 
 		else 
-		{
+		{	
+			system("cls");
+			menuDisplay(menu, menuCnt);
 			printf("다시 입력해주십시오.\n");
 		}
 	}
