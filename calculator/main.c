@@ -3,8 +3,10 @@
 #pragma warning (disable : 4996) // for MSVC
 
 #include <stdio.h>
-#include <windows.h>
+#include <windows.h> // for system("cls")
+
 #include "menu.h" // declaration of menu enum
+#include "BigInt.h" // declaration of BigInt function
 
 #define SIZE(arr) sizeof(arr) / sizeof(arr[0]); // macro for counting array room
 
@@ -16,6 +18,7 @@ int main(void)
 	int menuNum; // variable for save input menu number
 	char* menu[] = { "1. BigInt", "6. QUIT" }; // array which is pointing menu string
 	size_t menuCnt = SIZE(menu); // variable for save menu count
+	int check = 1;
 
 	for (;;)
 	{
@@ -26,13 +29,27 @@ int main(void)
 		switch (menuNum) // execute menu number
 		{
 			case BigInt:
-				break;
+				check = calcBigInt(); // function call for BigInt
+
+				if (check == 0) //error check
+				{
+					check = 1;
+					break;
+				}
+
+				else // if error is occured print error message and exit program
+				{
+					goto PRINT_ERROR;
+				}
 			case QUIT:
 				goto END;
 			default:
 				break;
 		}
 	}
+
+	PRINT_ERROR:
+	printf("에러가 발생하였습니다.\n프로그램을 종료합니다");
 
 	END :
 	return 0;
