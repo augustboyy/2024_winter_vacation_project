@@ -21,12 +21,12 @@ int main(void)
 	{
 		menuDisplay(menu, menuCnt); // function call for display menu
 		menuNum = inputInt(menu, menuCnt); // function call for input menu number
+		system("cls");
 
 		switch (menuNum) // execute menu number
 		{
 			case BigInt:
 				break;
-
 			case QUIT:
 				goto END;
 			default:
@@ -63,6 +63,9 @@ int inputInt(char** menu, size_t menuCnt)
 			if (getchar() != '\n')
 			{
 				while (getchar() != '\n') { ; }
+				system("cls");
+				menuDisplay(menu, menuCnt);
+				printf("다시 입력해주십시오.\n");
 			}
 
 			else 
@@ -71,7 +74,7 @@ int inputInt(char** menu, size_t menuCnt)
 			}
 		}
 
-		if (num <= 6 && num >= 1) // 1 ~ 6 사이의 숫자만 입력받게 만들기
+		if (num <= 6 && num >= 1) // number 1 ~ 6 are allowed
 		{ 
 			return num;
 			break;
