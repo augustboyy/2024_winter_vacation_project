@@ -8,10 +8,12 @@
 #include "menu.h" // declaration of menu enum
 #include "BigInt.h" // declaration of BigInt function
 
-#define SIZE(arr) sizeof(arr) / sizeof(arr[0]); // macro for counting array room
+#define SIZE(arr) sizeof(arr) / sizeof(arr[0]) // macro for counting array room
 
 void menuDisplay(char** menu, size_t menuCnt);
 int inputInt(char** menu, size_t menuCnt);
+void printWarningMsg(char** menu, size_t menuCnt);
+void buffClear(void); // defined in BigInt.c
 
 int main(void)
 {
@@ -49,7 +51,7 @@ int main(void)
 	}
 
 	PRINT_ERROR:
-	printf("에러가 발생하였습니다.\n프로그램을 종료합니다");
+	printf("에러가 발생하였습니다.\n프로그램을 종료합니다.");
 
 	END :
 	return 0;
@@ -79,10 +81,8 @@ int inputInt(char** menu, size_t menuCnt)
 
 			if (getchar() != '\n')
 			{
-				while (getchar() != '\n') { ; }
-				system("cls");
-				menuDisplay(menu, menuCnt);
-				printf("다시 입력해주십시오.\n");
+				buffClear();
+				printWarningMsg(menu, menuCnt);
 			}
 
 			else 
@@ -99,9 +99,16 @@ int inputInt(char** menu, size_t menuCnt)
 
 		else 
 		{	
-			system("cls");
-			menuDisplay(menu, menuCnt);
-			printf("다시 입력해주십시오.\n");
+			printWarningMsg(menu, menuCnt);
 		}
 	}
+}
+
+void printWarningMsg(char** menu, size_t menuCnt)
+{
+	system("cls");
+	menuDisplay(menu, menuCnt);
+	printf("다시 입력해주십시오.\n");
+
+	return;
 }
