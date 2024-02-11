@@ -1,19 +1,15 @@
-#pragma once
-
 #pragma warning (disable : 4996) // for MSVC
 
 #include <stdio.h>
 #include <windows.h> // for system("cls")
 
+#include "basic.h"
 #include "menu.h" // declaration of menu enum
 #include "BigInt.h" // declaration of BigInt function
-
-// #define SIZE(arr) (sizeof(arr) / sizeof(arr[0])) // macro for counting array room
 
 void menuDisplay(char** menu, int menuCnt);
 int inputInt(char** menu, int menuCnt);
 void printWarningMsg(char** menu, int menuCnt);
-void buffClear(void); // defined in BigInt.c
 
 int main(void)
 {
@@ -26,7 +22,7 @@ int main(void)
 	{
 		menuDisplay(menu, menuCnt); // function call for display menu
 		menuNum = inputInt(menu, menuCnt); // function call for input menu number
-		system("cls");
+		system(CLEAR);
 
 		switch (menuNum) // execute menu number
 		{
@@ -106,7 +102,7 @@ int inputInt(char** menu, int menuCnt)
 
 void printWarningMsg(char** menu, int menuCnt)
 {
-	system("cls");
+	system(CLEAR);
 	menuDisplay(menu, menuCnt);
 	printf("다시 입력해주십시오.\n");
 

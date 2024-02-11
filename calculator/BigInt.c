@@ -1,5 +1,4 @@
-#pragma once
-
+#include "basic.h"
 #include "BigInt.h"
 
 #include <stdio.h>
@@ -29,7 +28,7 @@ int calcBigInt(void) // 예외처리 해야함
 
 				if (check == 0)
 				{
-					resetArray(bigInt, SIZE(bigInt[0]));
+					resetBigInt(bigInt, SIZE(bigInt[0]));
 					return 0;
 				}
 
@@ -210,34 +209,16 @@ void resetTemp(char* temp, int size)
 	return;
 }
 
-int resetArray(char(*arr)[102], int size)
+int resetBigInt(char(*BigInt)[102], int size)
 {
 	int j;
 
 	for (j = 0; j < 2; j++)
 	{
-		arrayClear(arr[j], size);
+		arrayClear(BigInt[j], size);
 	}
 
 	return 0; // if there is no error, return 0
-}
-
-void arrayClear(char* arr, int size) //reset array to 0
-{
-	int i;
-
-	for (i = 0; i < size - 1; i++)
-	{
-		arr[i] = 0;
-	}
-
-	return;
-}
-
-void buffClear(void) //clear stdin buffer
-{
-	while (getchar() != '\n') { ; }
-	return;
 }
 
 //int inputInt(const char* msg) {
