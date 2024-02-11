@@ -9,26 +9,38 @@ int calcBigInt(void) // 예외처리 해야함
 	char bigInt[2][102] = { { 0, }, { 0, } }; // bigInt[0] : first big number, bigInt[1] : second big number
 	ll saveAddNum[6] = { 0, };
 	int numLen[2]; // numLen[0] : length of first big number, numLen[1] : length of second big number
+	char* emptyDigit[6] = { "", "", "", "", "", "" };
 
 	for (;;)
 	{
 		int check = 1;
+		int i = 0;
 
 		check = getBigInt(bigInt, SIZE(bigInt[0]), numLen);
 
 		if (check == 0)
 		{
 			check = 1;
-			check = addBigInt(bigInt, saveAddNum, numLen);
+			check = addBigInt(bigInt, saveAddNum, numLen, emptyDigit);
 
 			if (check == 0)
 			{
 				check = 1;
-				check = printRes(saveAddNum, SIZE(saveAddNum));
+				check = printRes(saveAddNum, SIZE(saveAddNum), emptyDigit);
 
 				if (check == 0)
 				{
 					resetBigInt(bigInt, SIZE(bigInt[0]));
+					while (emptyDigit[5 - i] != "")
+					{
+						free(emptyDigit[5 - i]);
+						i++;
+
+						if (i == 5)
+						{
+							break;
+						}
+					}
 					return 0;
 				}
 
@@ -113,17 +125,16 @@ int getBigInt(char(* bigInt)[102], int size, int* numLen)
 	return 0; // if there is no error, return 0
 }
 
-int addBigInt(char(*bigInt)[102], ll* saveAddNum, int* numLen)
+int addBigInt(char(*bigInt)[102], ll* saveAddNum, int* numLen, char** emptyDigit)
 {
 	ll divNum[][6] = { { 0, }, { 0, } };
 	char temp[19];
+	int tempDigit;
 	int unit, tempLen;
 	int i, j, k;
 
 	for (j = 0; j < 2; j++)
 	{
-		resetTemp(temp, SIZE(temp) - 1);
-
 		unit = (numLen[j] / (SIZE(temp) - 1)) + 1;
 		tempLen = numLen[j];
 
@@ -138,8 +149,6 @@ int addBigInt(char(*bigInt)[102], ll* saveAddNum, int* numLen)
 					temp[SIZE(temp) - 1 - k] = bigInt[j][tempLen - k];
 				}
 
-				/*printf("%s\n", temp);*/
-
 				tempLen -= 18;
 			}
 
@@ -149,22 +158,66 @@ int addBigInt(char(*bigInt)[102], ll* saveAddNum, int* numLen)
 				{
 					temp[SIZE(temp) - 1 - k] = bigInt[j][tempLen - k];
 				}
-				//printf("q%s\n", temp);
 			}
 
 			divNum[j][SIZE(divNum[j]) - 1 - i] = atoll(temp);
 		}
 
-		for (i = 0; i < unit; i++)
+	}
+	for (i = 0; i < unit; i++)
+	{
+		saveAddNum[SIZE(divNum[0]) - 1 - i] = saveAddNum[SIZE(divNum[0]) - 1 - i] + divNum[0][SIZE(divNum[0]) - 1 - i] + divNum[1][SIZE(divNum[0]) - 1 - i];
+		if (unit != 1)
 		{
-			saveAddNum[SIZE(divNum[j]) - 1 - i] = divNum[0][SIZE(divNum[j]) - 1 - i] + divNum[1][SIZE(divNum[j]) - 1 - i];
+			if (i < unit - 1)
+			{
+				tempDigit = digit(&saveAddNum[SIZE(divNum[0]) - 1 - i]);
+
+				if (tempDigit == 19)
+				{
+						saveAddNum[SIZE(divNum[0]) - 1 - (i + 1)]++;
+						saveAddNum[SIZE(divNum[0]) - 1 - i] -= 1000000000000000000;
+						printf("saveAddNum is %lld\n", saveAddNum[SIZE(divNum[0]) - 1 - i]);
+						tempDigit = digit(&saveAddNum[SIZE(divNum[0]) - 1 - i]);
+						printf("tempDigit is %d\n", tempDigit);
+				}
+
+				if (tempDigit < 18)
+				{
+					tempDigit = 18 - tempDigit;
+					emptyDigit[SIZE(divNum[0]) - 1 - i] = myAlloc(tempDigit + 1);
+
+					if (emptyDigit[SIZE(divNum[0]) - 1 - i] == NULL)
+					{
+						return 1;
+					}
+
+					else
+					{
+						;
+					}
+
+					arraySetZero(emptyDigit[SIZE(divNum[0]) - 1 - i], tempDigit);
+					*(emptyDigit[SIZE(divNum[0]) - 1 - i] + tempDigit) = 0;
+				}
+			}
+
+			else
+			{
+				;
+			}
+		}
+
+		else 
+		{ 
+			; 
 		}
 	}
 
 	return 0;
 }
 
-int printRes(ll* saveAddNum, int size)
+int printRes(ll* saveAddNum, int size, char** emptyDigit)
 {
 	int i, cnt = 0;
 
@@ -177,6 +230,7 @@ int printRes(ll* saveAddNum, int size)
 
 		else
 		{
+			printf("%s", emptyDigit[i]);
 			printf("%lld", saveAddNum[i]);
 			cnt = 1;
 		}
@@ -219,6 +273,30 @@ int resetBigInt(char(*BigInt)[102], int size)
 	}
 
 	return 0; // if there is no error, return 0
+}
+
+int digit(ll* saveAddNum)
+{
+	int digit = 1;
+	ll n = 1, i = 10;
+
+	for (;;)
+	{
+		n = *saveAddNum / i;
+
+		if (n == 0)
+		{
+			break;
+		}
+
+		else
+		{
+			digit++;
+			i *= 10;
+		}
+	}
+
+	return digit;
 }
 
 //int inputInt(const char* msg) {
