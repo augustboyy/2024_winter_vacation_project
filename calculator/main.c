@@ -8,18 +8,18 @@
 #include "menu.h" // declaration of menu enum
 #include "BigInt.h" // declaration of BigInt function
 
-#define SIZE(arr) sizeof(arr) / sizeof(arr[0]) // macro for counting array room
+// #define SIZE(arr) (sizeof(arr) / sizeof(arr[0])) // macro for counting array room
 
-void menuDisplay(char** menu, size_t menuCnt);
-int inputInt(char** menu, size_t menuCnt);
-void printWarningMsg(char** menu, size_t menuCnt);
+void menuDisplay(char** menu, int menuCnt);
+int inputInt(char** menu, int menuCnt);
+void printWarningMsg(char** menu, int menuCnt);
 void buffClear(void); // defined in BigInt.c
 
 int main(void)
 {
 	int menuNum; // variable for save input menu number
 	char* menu[] = { "1. BigInt", "6. QUIT" }; // array which is pointing menu string
-	size_t menuCnt = SIZE(menu); // variable for save menu count
+	int menuCnt = SIZE(menu); // variable for save menu count
 	int check = 1;
 
 	for (;;)
@@ -33,7 +33,7 @@ int main(void)
 			case BigInt:
 				check = calcBigInt(); // function call for BigInt
 
-				if (check == 0) //error check
+				if (check == 0) //error check, if error is not occured break the switch-case
 				{
 					check = 1;
 					break;
@@ -51,13 +51,13 @@ int main(void)
 	}
 
 	PRINT_ERROR:
-	printf("에러가 발생하였습니다.\n프로그램을 종료합니다.");
+		printf("에러가 발생하였습니다.\n프로그램을 종료합니다.");
 
 	END :
-	return 0;
+		return 0;
 }
 
-void menuDisplay(char** menu, size_t menuCnt)
+void menuDisplay(char** menu, int menuCnt)
 {
 	int i;
 
@@ -69,7 +69,7 @@ void menuDisplay(char** menu, size_t menuCnt)
 	return;
 }
 
-int inputInt(char** menu, size_t menuCnt)
+int inputInt(char** menu, int menuCnt)
 {
 	int num = 0;
 
@@ -104,7 +104,7 @@ int inputInt(char** menu, size_t menuCnt)
 	}
 }
 
-void printWarningMsg(char** menu, size_t menuCnt)
+void printWarningMsg(char** menu, int menuCnt)
 {
 	system("cls");
 	menuDisplay(menu, menuCnt);
