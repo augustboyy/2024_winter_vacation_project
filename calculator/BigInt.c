@@ -1,7 +1,7 @@
 #pragma warning (disable : 4996) // for MSVC
 
-#include "basic.h"
 #include "BigInt.h"
+#include "basic.h"
 
 #include <stdio.h>
 #include <stdlib.h>
