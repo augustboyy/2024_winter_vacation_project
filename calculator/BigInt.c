@@ -1,8 +1,11 @@
+#pragma warning (disable : 4996) // for MSVC
+
 #include "basic.h"
 #include "BigInt.h"
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <windows.h> // for system("cls")
 
 int calcBigInt(void) // 예외처리 해야함
 {
@@ -14,6 +17,7 @@ int calcBigInt(void) // 예외처리 해야함
 	for (;;)
 	{
 		int check = 1;
+		int menu;
 		int i = 0;
 
 		check = getBigInt(bigInt, SIZE(bigInt[0]), numLen);
@@ -41,28 +45,44 @@ int calcBigInt(void) // 예외처리 해야함
 							break;
 						}
 					}
-					return 0;
+
+					menu = inputIntForBigIntMenu();
+
+					if (menu == 1)
+					{
+						system(CLEAR);
+						goto RECALC;
+					}
+
+					else
+					{
+						system(CLEAR);
+						return 0;
+					}
 				}
 
 				else
 				{
-					goto ERROR;
+					goto ABNORMAL_BEHAVIER;
 				}
 			}
 
 			else
 			{
-				goto ERROR;
+				goto ABNORMAL_BEHAVIER;
 			}
 		}
 
 		else
 		{
-			goto ERROR;
+			goto ABNORMAL_BEHAVIER;
 		}
 
-		ERROR:
+		ABNORMAL_BEHAVIER:
 			return 1;
+
+		RECALC:
+			;
 	}
 }
 
@@ -117,7 +137,6 @@ int getBigInt(char(* bigInt)[102], int size, int* numLen)
 
 		if(j == 2) // if get two big number, break loop
 		{
-			printf("첫번째 큰 수 : %s\n두번째 큰 수 : %s\n", bigInt[0], bigInt[1]);
 			break;
 		}
 	}
@@ -130,15 +149,16 @@ int addBigInt(char(*bigInt)[102], ll* saveAddNum, int* numLen, char** emptyDigit
 	ll divNum[][6] = { { 0, }, { 0, } };
 	char temp[19];
 	int tempDigit;
-	int unit, tempLen;
+	int unit[2], tempLen;
+	int unitBig;
 	int i, j, k;
 
 	for (j = 0; j < 2; j++)
 	{
-		unit = (numLen[j] / (SIZE(temp) - 1)) + 1; // calculate how many times to divide big number
+		unit[j] = (numLen[j] / (SIZE(temp) - 1)) + 1; // calculate how many times to divide big number
 		tempLen = numLen[j]; // save length of big number
 
-		for (i = 0; i < unit; i++) // loop unit times
+		for (i = 0; i < unit[j]; i++) // loop unit times
 		{
 			resetTemp(temp, SIZE(temp) - 1); // array temp is null now
 
@@ -165,13 +185,15 @@ int addBigInt(char(*bigInt)[102], ll* saveAddNum, int* numLen, char** emptyDigit
 
 	}
 
-	for (i = 0; i < unit; i++) // loop unit times
+	unit[0] > unit[1] ? (unitBig = unit[0]) : (unitBig = unit[1]); // below loop must be done bigier unit times
+
+	for (i = 0; i < unitBig; i++) // loop unit times
 	{
 		saveAddNum[SIZE(divNum[0]) - 1 - i] += divNum[0][SIZE(divNum[0]) - 1 - i] + divNum[1][SIZE(divNum[0]) - 1 - i]; // add arithmatic
 
-		if (unit != 1) // BigInt is bigger than 18 digits
+		if (unitBig != 1) // BigInt is bigger than 18 digits
 		{
-			if (i < unit - 1) // except the highest unit
+			if (i < unitBig - 1) // except the highest unit
 			{
 				tempDigit = digitCnt(&saveAddNum[SIZE(divNum[0]) - 1 - i]);
 
@@ -205,6 +227,8 @@ int addBigInt(char(*bigInt)[102], ll* saveAddNum, int* numLen, char** emptyDigit
 int printRes(ll* saveAddNum, int size, char** emptyDigit)
 {
 	int i, cnt = 0;
+
+	printf("결과 = ");
 
 	for (i = 0; i < size; i++)
 	{
@@ -284,24 +308,39 @@ int digitCnt(ll* saveAddNum) // count digits
 	return digit;
 }
 
-//int inputInt(const char* msg) {
-//
-//	int num = 0;
-//
-//	for (;;) {
-//
-//		printf("%s", msg);
-//		scanf("%d", &num);
-//
-//		if (getchar() != '\n') {
-//			while (getchar() != '\n') {
-//				;
-//			}
-//		}
-//
-//		else {
-//			break;
-//		}
-//	}
-//	return num;
-//}
+int inputIntForBigIntMenu(void)
+{
+	int num = 0;
+	char* msg = "1. 다시 계산하기\n2. 메인 메뉴\n";
+
+	for (;;)
+	{
+		for (;;)
+		{
+			printf("\n%s", msg);
+			scanf("%d", &num);
+
+			if (getchar() != '\n')
+			{
+				printf("다시 입력해주십시오.\n");
+				buffClear();
+			}
+
+			else
+			{
+				break;
+			}
+		}
+
+		if (num <= 2 && num >= 1) // number 1 ~ 2 are allowed
+		{
+			return num;
+			break;
+		}
+
+		else
+		{
+			printf("다시 입력해주십시오.\n");
+		}
+	}
+}

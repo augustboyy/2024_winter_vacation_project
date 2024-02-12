@@ -7,3 +7,4 @@ int printRes(ll* saveAddNum, int size, char** emptyDigit);
 void resetTemp(char* temp, int size);
 int resetBigInt(char(*BigInt)[102], int size);
 int digitCnt(ll* saveAddNum);
+int inputIntForBigIntMenu(void);
