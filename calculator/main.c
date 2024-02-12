@@ -15,7 +15,7 @@ void printWarningMsg(char** menu, int menuCnt);
 int main(void)
 {
 	int menuNum; // variable for save input menu number
-	char* menu[] = { "1. BigInt", "2. base_conversion", "6. QUIT" }; // array which is pointing menu string
+	char* menu[] = { "1. BigInt", "2. base conversion", "6. QUIT" }; // array which is pointing menu string
 	int menuCnt = SIZE(menu); // variable for save menu count
 	int check;
 
