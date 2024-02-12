@@ -9,7 +9,7 @@ int calcBigInt(void) // 예외처리 해야함
 	char bigInt[2][102] = { { 0, }, { 0, } }; // bigInt[0] : first big number, bigInt[1] : second big number
 	ll saveAddNum[6] = { 0, };
 	int numLen[2]; // numLen[0] : length of first big number, numLen[1] : length of second big number
-	char* emptyDigit[6] = { "", "", "", "", "", "" };
+	char* emptyDigit[6] = { "", "", "", "", "", "" }; // for displaying empty digit
 
 	for (;;)
 	{
@@ -30,8 +30,8 @@ int calcBigInt(void) // 예외처리 해야함
 
 				if (check == 0)
 				{
-					resetBigInt(bigInt, SIZE(bigInt[0]));
-					while (emptyDigit[5 - i] != "")
+					resetBigInt(bigInt, SIZE(bigInt[0])); // reset bigInt array for using next time
+					while (emptyDigit[5 - i] != "") // free dynamic memory
 					{
 						free(emptyDigit[5 - i]);
 						i++;
@@ -135,16 +135,16 @@ int addBigInt(char(*bigInt)[102], ll* saveAddNum, int* numLen, char** emptyDigit
 
 	for (j = 0; j < 2; j++)
 	{
-		unit = (numLen[j] / (SIZE(temp) - 1)) + 1;
-		tempLen = numLen[j];
+		unit = (numLen[j] / (SIZE(temp) - 1)) + 1; // calculate how many times to divide big number
+		tempLen = numLen[j]; // save length of big number
 
-		for (i = 0; i < unit; i++)
+		for (i = 0; i < unit; i++) // loop unit times
 		{
-			resetTemp(temp, SIZE(temp) - 1);
+			resetTemp(temp, SIZE(temp) - 1); // array temp is null now
 
-			if (tempLen >= 18)
+			if (tempLen >= 18) // division of Big is not the biggest one
 			{
-				for (k = 1; k <= SIZE(temp) - 1; /*== 18*/ k++)
+				for (k = 1; k <= SIZE(temp) - 1; k++) // SIZE(temp) - 1 is 18
 				{
 					temp[SIZE(temp) - 1 - k] = bigInt[j][tempLen - k];
 				}
@@ -152,7 +152,7 @@ int addBigInt(char(*bigInt)[102], ll* saveAddNum, int* numLen, char** emptyDigit
 				tempLen -= 18;
 			}
 
-			else
+			else // division of Big is the biggest one
 			{
 				for (k = 1; k <= tempLen; k++)
 				{
@@ -160,61 +160,46 @@ int addBigInt(char(*bigInt)[102], ll* saveAddNum, int* numLen, char** emptyDigit
 				}
 			}
 
-			divNum[j][SIZE(divNum[j]) - 1 - i] = atoll(temp);
+			divNum[j][SIZE(divNum[j]) - 1 - i] = atoll(temp); // make division of BigInt(char type) into long long type
 		}
 
 	}
-	for (i = 0; i < unit; i++)
-	{
-		saveAddNum[SIZE(divNum[0]) - 1 - i] = saveAddNum[SIZE(divNum[0]) - 1 - i] + divNum[0][SIZE(divNum[0]) - 1 - i] + divNum[1][SIZE(divNum[0]) - 1 - i];
-		if (unit != 1)
-		{
-			if (i < unit - 1)
-			{
-				tempDigit = digit(&saveAddNum[SIZE(divNum[0]) - 1 - i]);
 
-				if (tempDigit == 19)
+	for (i = 0; i < unit; i++) // loop unit times
+	{
+		saveAddNum[SIZE(divNum[0]) - 1 - i] += divNum[0][SIZE(divNum[0]) - 1 - i] + divNum[1][SIZE(divNum[0]) - 1 - i]; // add arithmatic
+
+		if (unit != 1) // BigInt is bigger than 18 digits
+		{
+			if (i < unit - 1) // except the highest unit
+			{
+				tempDigit = digitCnt(&saveAddNum[SIZE(divNum[0]) - 1 - i]);
+
+				if (tempDigit == 19) // if saveAddNum is bigger than n * 10^17 (18 digits), manipulate the value
 				{
-						saveAddNum[SIZE(divNum[0]) - 1 - (i + 1)]++;
-						saveAddNum[SIZE(divNum[0]) - 1 - i] -= 1000000000000000000;
-						printf("saveAddNum is %lld\n", saveAddNum[SIZE(divNum[0]) - 1 - i]);
-						tempDigit = digit(&saveAddNum[SIZE(divNum[0]) - 1 - i]);
-						printf("tempDigit is %d\n", tempDigit);
+					saveAddNum[SIZE(divNum[0]) - 1 - (i + 1)]++;
+					saveAddNum[SIZE(divNum[0]) - 1 - i] -= 1000000000000000000; // (1 * 10^18) when tempDigit == 19, 19 digit's number is always 1
+					tempDigit = digitCnt(&saveAddNum[SIZE(divNum[0]) - 1 - i]);
 				}
 
-				if (tempDigit < 18)
+				if (tempDigit < 18) // if division is smaller than 1 *10^17 make 0 array to supplement empty digits
 				{
 					tempDigit = 18 - tempDigit;
 					emptyDigit[SIZE(divNum[0]) - 1 - i] = myAlloc(tempDigit + 1);
 
-					if (emptyDigit[SIZE(divNum[0]) - 1 - i] == NULL)
+					if (emptyDigit[SIZE(divNum[0]) - 1 - i] == NULL) // if dynamic allocation is failled
 					{
 						return 1;
-					}
-
-					else
-					{
-						;
 					}
 
 					arraySetZero(emptyDigit[SIZE(divNum[0]) - 1 - i], tempDigit);
 					*(emptyDigit[SIZE(divNum[0]) - 1 - i] + tempDigit) = 0;
 				}
 			}
-
-			else
-			{
-				;
-			}
-		}
-
-		else 
-		{ 
-			; 
 		}
 	}
 
-	return 0;
+	return 0; // if there is no error, return 0
 }
 
 int printRes(ll* saveAddNum, int size, char** emptyDigit)
@@ -223,7 +208,7 @@ int printRes(ll* saveAddNum, int size, char** emptyDigit)
 
 	for (i = 0; i < size; i++)
 	{
-		if (saveAddNum[i] == 0)
+		if (saveAddNum[i] == 0) // if there is no value do not print anything
 		{
 			;
 		}
@@ -236,13 +221,13 @@ int printRes(ll* saveAddNum, int size, char** emptyDigit)
 		}
 	}
 
-	if (cnt == 0)
+	if (cnt == 0) // if result is 0
 	{
 		putchar('0');
 	}
 	putchar('\n');
 
-	for (i = 0; i < size; i++)
+	for (i = 0; i < size; i++) // initialize saveAddNum array
 	{
 		saveAddNum[i] = 0;
 	}
@@ -275,7 +260,7 @@ int resetBigInt(char(*BigInt)[102], int size)
 	return 0; // if there is no error, return 0
 }
 
-int digit(ll* saveAddNum)
+int digitCnt(ll* saveAddNum) // count digits
 {
 	int digit = 1;
 	ll n = 1, i = 10;
