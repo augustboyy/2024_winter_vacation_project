@@ -1,7 +1,7 @@
 #pragma warning (disable : 4996) // for MSVC
 
-#include "BigInt.h"
 #include "basic.h"
+#include "BigInt.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -13,12 +13,12 @@ int calcBigInt(void) // 예외처리 해야함
 	ll saveAddNum[6] = { 0, };
 	int numLen[2]; // numLen[0] : length of first big number, numLen[1] : length of second big number
 	char* emptyDigit[6] = { "", "", "", "", "", "" }; // for displaying empty digit
+	int check, menu, i;
 
 	for (;;)
 	{
-		int check = 1;
-		int menu;
-		int i = 0;
+		check = 1;
+		i = 0;
 
 		check = getBigInt(bigInt, SIZE(bigInt[0]), numLen);
 
@@ -30,7 +30,7 @@ int calcBigInt(void) // 예외처리 해야함
 			if (check == 0)
 			{
 				check = 1;
-				check = printRes(saveAddNum, SIZE(saveAddNum), emptyDigit);
+				check = printResBigInt(saveAddNum, SIZE(saveAddNum), emptyDigit);
 
 				if (check == 0)
 				{
@@ -46,7 +46,7 @@ int calcBigInt(void) // 예외처리 해야함
 						}
 					}
 
-					menu = inputIntForBigIntMenu();
+					menu = inputIntForFunctionMenu();
 
 					if (menu == 1)
 					{
@@ -160,7 +160,7 @@ int addBigInt(char(*bigInt)[102], ll* saveAddNum, int* numLen, char** emptyDigit
 
 		for (i = 0; i < unit[j]; i++) // loop unit times
 		{
-			resetTemp(temp, SIZE(temp) - 1); // array temp is null now
+			resetTempBigInt(temp, SIZE(temp) - 1); // array temp is null now
 
 			if (tempLen >= 18) // division of Big is not the biggest one
 			{
@@ -224,7 +224,7 @@ int addBigInt(char(*bigInt)[102], ll* saveAddNum, int* numLen, char** emptyDigit
 	return 0; // if there is no error, return 0
 }
 
-int printRes(ll* saveAddNum, int size, char** emptyDigit)
+int printResBigInt(ll* saveAddNum, int size, char** emptyDigit)
 {
 	int i, cnt = 0;
 
@@ -259,7 +259,7 @@ int printRes(ll* saveAddNum, int size, char** emptyDigit)
 	return 0;
 }
 
-void resetTemp(char* temp, int size)
+void resetTempBigInt(char* temp, int size)
 {
 	int i;
 
@@ -306,40 +306,4 @@ int digitCnt(ll* saveAddNum) // count digits
 	}
 
 	return digit;
-}
-
-int inputIntForBigIntMenu(void)
-{
-	int num = 0;
-	char* msg = "1. 다시 계산하기\n2. 메인 메뉴\n";
-
-	for (;;)
-	{
-		for (;;)
-		{
-			printf("\n%s", msg);
-			scanf("%d", &num);
-
-			if (getchar() != '\n')
-			{
-				printf("다시 입력해주십시오.\n");
-				buffClear();
-			}
-
-			else
-			{
-				break;
-			}
-		}
-
-		if (num <= 2 && num >= 1) // number 1 ~ 2 are allowed
-		{
-			return num;
-		}
-
-		else
-		{
-			printf("다시 입력해주십시오.\n");
-		}
-	}
 }

@@ -10,3 +10,4 @@ void arrayClear(char* arr, int size);
 void arraySetZero(char* arr, int size);
 void buffClear(void);
 char* myAlloc(int size);
+int inputIntForFunctionMenu(void);

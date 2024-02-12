@@ -1,3 +1,4 @@
+#pragma warning(disable: 4996) // for MSVC
 #include "basic.h"
 
 #include <stdio.h>
@@ -48,5 +49,41 @@ char* myAlloc (int size)
 	{
 		printf("Dynamic allocation fail!\n");
 		return NULL;
+	}
+}
+
+int inputIntForFunctionMenu(void)
+{
+	int num = 0;
+	char* msg = "1. 다시 계산하기\n2. 메인 메뉴\n";
+
+	for (;;)
+	{
+		for (;;)
+		{
+			printf("\n%s", msg);
+			scanf("%d", &num);
+
+			if (getchar() != '\n')
+			{
+				printf("다시 입력해주십시오.\n");
+				buffClear();
+			}
+
+			else
+			{
+				break;
+			}
+		}
+
+		if (num <= 2 && num >= 1) // number 1 ~ 2 are allowed
+		{
+			return num;
+		}
+
+		else
+		{
+			printf("다시 입력해주십시오.\n");
+		}
 	}
 }

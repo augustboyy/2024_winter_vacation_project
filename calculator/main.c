@@ -6,6 +6,7 @@
 #include "basic.h"
 #include "menu.h" // declaration of menu enum
 #include "BigInt.h" // declaration of BigInt function
+#include "base_conversion.h" // dedeclaration of base_conversion function
 
 void menuDisplay(char** menu, int menuCnt);
 int inputInt(char** menu, int menuCnt);
@@ -16,10 +17,11 @@ int main(void)
 	int menuNum; // variable for save input menu number
 	char* menu[] = { "1. BigInt", "2. base_conversion", "6. QUIT" }; // array which is pointing menu string
 	int menuCnt = SIZE(menu); // variable for save menu count
-	int check = 1;
+	int check;
 
 	for (;;)
 	{
+		check = 1;
 		menuDisplay(menu, menuCnt); // function call for display menu
 		menuNum = inputInt(menu, menuCnt); // function call for input menu number
 		system(CLEAR);
@@ -31,7 +33,6 @@ int main(void)
 
 				if (check == 0) //error check, if error is not occured break the switch-case
 				{
-					check = 1;
 					break;
 				}
 
@@ -40,7 +41,19 @@ int main(void)
 					goto PRINT_ERROR;
 				}
 
-			case base_conversion:
+			case base_conversion:				
+				check = baseConversion(); // function call for baseConversion
+
+				if (check == 0) //error check, if error is not occured break the switch-case
+				{
+					break;
+				}
+
+				else // if error is occured print error message and exit program
+				{
+					goto PRINT_ERROR;
+				}
+
 			case QUIT:
 				goto END;
 			default:
