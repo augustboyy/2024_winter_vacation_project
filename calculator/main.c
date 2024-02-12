@@ -14,7 +14,7 @@ void printWarningMsg(char** menu, int menuCnt);
 int main(void)
 {
 	int menuNum; // variable for save input menu number
-	char* menu[] = { "1. BigInt", "6. QUIT" }; // array which is pointing menu string
+	char* menu[] = { "1. BigInt", "2. base_conversion", "6. QUIT" }; // array which is pointing menu string
 	int menuCnt = SIZE(menu); // variable for save menu count
 	int check = 1;
 
@@ -39,6 +39,8 @@ int main(void)
 				{
 					goto PRINT_ERROR;
 				}
+
+			case base_conversion:
 			case QUIT:
 				goto END;
 			default:
@@ -90,7 +92,6 @@ int inputInt(char** menu, int menuCnt)
 		if (num <= 6 && num >= 1) // number 1 ~ 6 are allowed
 		{ 
 			return num;
-			break;
 		}
 
 		else 

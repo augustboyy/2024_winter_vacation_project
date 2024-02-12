@@ -335,7 +335,6 @@ int inputIntForBigIntMenu(void)
 		if (num <= 2 && num >= 1) // number 1 ~ 2 are allowed
 		{
 			return num;
-			break;
 		}
 
 		else
