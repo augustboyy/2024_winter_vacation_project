@@ -19,6 +19,17 @@ int calcBigInt(void) // 예외처리 해야함
 	{
 		check = 1;
 		i = 0;
+		check = resetEmptyDigit(emptyDigit, SIZE(emptyDigit)); // reset emptyDigit array for using next time
+
+		if (check == 0)
+		{
+			check = 1;
+		}
+
+		else
+		{
+			goto ABNORMAL_BEHAVIER;
+		}
 
 		check = getBigInt(bigInt, SIZE(bigInt[0]), numLen);
 
@@ -37,7 +48,7 @@ int calcBigInt(void) // 예외처리 해야함
 					resetBigInt(bigInt, SIZE(bigInt[0])); // reset bigInt array for using next time
 					while (emptyDigit[5 - i] != "") // free dynamic memory
 					{
-						free(emptyDigit[5 - i]);
+						myFree(emptyDigit[5 - i]);
 						i++;
 
 						if (i == 5)
@@ -207,7 +218,7 @@ int addBigInt(char(*bigInt)[102], ll* saveAddNum, int* numLen, char** emptyDigit
 				if (tempDigit < 18) // if division is smaller than 1 *10^17 make 0 array to supplement empty digits
 				{
 					tempDigit = 18 - tempDigit;
-					emptyDigit[SIZE(divNum[0]) - 1 - i] = myAlloc(tempDigit + 1);
+					emptyDigit[SIZE(divNum[0]) - 1 - i] = (char*)myAlloc(tempDigit + 1, sizeof(char));
 
 					if (emptyDigit[SIZE(divNum[0]) - 1 - i] == NULL) // if dynamic allocation is failled
 					{
@@ -215,7 +226,7 @@ int addBigInt(char(*bigInt)[102], ll* saveAddNum, int* numLen, char** emptyDigit
 					}
 
 					arraySetZero(emptyDigit[SIZE(divNum[0]) - 1 - i], tempDigit);
-					*(emptyDigit[SIZE(divNum[0]) - 1 - i] + tempDigit) = 0;
+					*(emptyDigit[SIZE(divNum[0]) - 1 - i] + tempDigit) = 0; // for %s
 				}
 			}
 		}
@@ -234,7 +245,7 @@ int printResBigInt(ll* saveAddNum, int size, char** emptyDigit)
 	{
 		if (saveAddNum[i] == 0) // if there is no value do not print anything
 		{
-			;
+			printf("%s", emptyDigit[i]);
 		}
 
 		else
@@ -284,7 +295,19 @@ int resetBigInt(char(*BigInt)[102], int size)
 	return 0; // if there is no error, return 0
 }
 
-int digitCnt(ll* saveAddNum) // count digits
+int resetEmptyDigit(char** emptyDigit, int size)
+{
+	int i;
+
+	for (i = 0; i < size; i++)
+	{
+		emptyDigit[i] = "";
+	}
+
+	return 0; // if there is no error, return 0
+}
+
+int digitCnt(const ll* saveAddNum) // count digits
 {
 	int digit = 1;
 	ll n = 1, i = 10;

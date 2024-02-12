@@ -9,5 +9,6 @@ typedef long long ll;
 void arrayClear(char* arr, int size);
 void arraySetZero(char* arr, int size);
 void buffClear(void);
-char* myAlloc(int size);
+void* myAlloc(int size, int elemSize);
+void myFree(void* ptr);
 int inputIntForFunctionMenu(void);

@@ -15,7 +15,7 @@ void printWarningMsg(char** menu, int menuCnt);
 int main(void)
 {
 	int menuNum; // variable for save input menu number
-	char* menu[] = { "1. BigInt", "2. base conversion", "6. QUIT" }; // array which is pointing menu string
+	char* menu[] = { "1. BigInt", "2. base conversion", "5. QUIT" }; // array which is pointing menu string
 	int menuCnt = SIZE(menu); // variable for save menu count
 	int check;
 
@@ -102,7 +102,7 @@ int inputInt(char** menu, int menuCnt)
 			}
 		}
 
-		if (num <= 6 && num >= 1) // number 1 ~ 6 are allowed
+		if (num <= 5 && num >= 1) // number 1 ~ 5 are allowed
 		{ 
 			return num;
 		}

@@ -34,11 +34,11 @@ void buffClear(void) //clear stdin buffer
 	return;
 }
 
-char* myAlloc (int size)
+void* myAlloc (int size, int elemSize) // dynamic allocation with error check
 {
-	char* arr = NULL;
+	void* arr = NULL;
 
-	arr = (char*)malloc(size * sizeof(char));
+	arr = malloc(size * elemSize);
 
 	if (arr != NULL)
 	{
@@ -50,6 +50,12 @@ char* myAlloc (int size)
 		printf("Dynamic allocation fail!\n");
 		return NULL;
 	}
+}
+
+void myFree(void* ptr) // avoid dangling pointer
+{
+	free(ptr);
+	ptr = NULL;
 }
 
 int inputIntForFunctionMenu(void)
