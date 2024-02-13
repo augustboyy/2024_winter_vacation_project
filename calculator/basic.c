@@ -73,7 +73,7 @@ void myFree(void* ptr) // avoid dangling pointer
 int inputIntForFunctionMenu(void)
 {
 	int num = 0;
-	char* msg = "1. 다시 계산하기\n2. 메인 메뉴\n";
+	char* msg = "1. 다시 계산하기\n2. 이전 메뉴로 나가기\n";
 
 	for (;;)
 	{

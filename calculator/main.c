@@ -7,6 +7,7 @@
 #include "menu.h" // declaration of menu enum
 #include "BigInt.h" // declaration of BigInt function
 #include "base_conversion.h" // dedeclaration of base_conversion function
+#include "matrix.h" // declaration of matrix function
 
 void menuDisplay(char** menu, int menuCnt);
 int inputInt(char** menu, int menuCnt);
@@ -15,7 +16,7 @@ void printWarningMsg(char** menu, int menuCnt);
 int main(void)
 {
 	int menuNum; // variable for save input menu number
-	char* menu[] = { "1. BigInt", "2. base conversion", "5. QUIT" }; // array which is pointing menu string
+	char* menu[] = { "1. BigInt", "2. base conversion", "4. matrix", "5. QUIT" }; // array which is pointing menu string
 	int menuCnt = SIZE(menu); // variable for save menu count
 	int check;
 
