@@ -126,7 +126,7 @@ int getBigInt(char(* bigInt)[102], int size, int* numLen)
 			{
 				printf("숫자만 입력해주십시오.\n");
 				buffClear();
-				arrayClear(bigInt[j], size);
+				charArrayClear(bigInt[j], size);
 				check = 1; // exception check
 				break;
 			}
@@ -135,7 +135,7 @@ int getBigInt(char(* bigInt)[102], int size, int* numLen)
 			{
 				printf("입력한 수가 너무 큽니다!\n");
 				buffClear();
-				arrayClear(bigInt[j], size);
+				charArrayClear(bigInt[j], size);
 				check = 1; // exception check
 				break;
 			}
@@ -291,7 +291,7 @@ int resetBigInt(char(*BigInt)[102], int size)
 
 	for (j = 0; j < 2; j++)
 	{
-		arrayClear(BigInt[j], size);
+		charArrayClear(BigInt[j], size);
 	}
 
 	return 0; // if there is no error, return 0

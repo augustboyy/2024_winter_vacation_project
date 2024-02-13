@@ -6,7 +6,8 @@
 
 typedef long long ll;
 
-void arrayClear(char* arr, int size);
+void charArrayClear(char* arr, int size);
+void intArrayClear(int* arr, int size);
 void arraySetZero(char* arr, int size);
 void buffClear(void);
 void* myAlloc(int size, int elemSize);

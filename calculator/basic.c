@@ -4,7 +4,19 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void arrayClear(char* arr, int size) //reset array to NULL
+void charArrayClear(char* arr, int size) //reset array to NULL
+{
+	int i;
+
+	for (i = 0; i < size; i++)
+	{
+		arr[i] = 0;
+	}
+
+	return;
+}
+
+void intArrayClear(int* arr, int size) //reset array to NULL
 {
 	int i;
 

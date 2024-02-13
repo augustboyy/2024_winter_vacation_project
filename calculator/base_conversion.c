@@ -16,7 +16,7 @@ int baseConversion(void)
 	for (;;)
 	{	
 		check = 1; // check variable for error check
-		arrayClear(string, SIZE(string)); // reset string array to NULL
+		charArrayClear(string, SIZE(string)); // reset string array to NULL
 		detection = (unsigned)0x80000000; // 2147483648 in decimal
 
 		check = getDecNum(&decNum);
