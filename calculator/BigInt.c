@@ -108,14 +108,16 @@ int getBigInt(char(* bigInt)[102], int size, int* numLen)
 
 		switch (j)
 		{
-		case 0:
-			printf("첫번째 큰 수를 입력해주십시오.\n");
-			break;
-		case 1:
-			printf("두번째 큰 수를 입력해주십시오.\n");
-			break;
-		default:
-			break;
+			case 0:
+				printf("첫번째 큰 수를 입력해주십시오.\n");
+				break;
+
+			case 1:
+				printf("두번째 큰 수를 입력해주십시오.\n");
+				break;
+
+			default:
+				break;
 		}
 
 		for (i = 0; (bigInt[j][i] = getchar()) != '\n'; i++) // get character until enter / for this loop, stdin buffer is always cleared

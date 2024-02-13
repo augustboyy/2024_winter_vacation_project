@@ -54,8 +54,22 @@ int main(void)
 					goto PRINT_ERROR;
 				}
 
+			case matrix:
+				check = calcMatrix(); // function call for baseConversion
+
+				if (check == 0) //error check, if error is not occured break the switch-case
+				{
+					break;
+				}
+
+				else // if error is occured print error message and exit program
+				{
+					goto PRINT_ERROR;
+				}
+
 			case QUIT:
 				goto END;
+
 			default:
 				break;
 		}
