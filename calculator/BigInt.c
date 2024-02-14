@@ -7,7 +7,7 @@
 #include <stdlib.h>
 #include <windows.h> // for system("cls")
 
-int calcBigInt(void) // 예외처리 해야함
+int calcBigInt(void)
 {
 	char bigInt[2][102] = { { 0, }, { 0, } }; // bigInt[0] : first big number, bigInt[1] : second big number
 	ll saveAddNum[6] = { 0, };
