@@ -117,7 +117,7 @@ int convertBase(const int* decNum, unsigned int* detection, char* string)
 
 	for (i = 0; i < 32; i++)
 	{
-		res = *decNum & *detection;
+		res = *decNum & *detection; // bitwise AND operation AND operation detect bit 1 or 0
 		res >>= (31 - i);
 
 		if (res == 0)
@@ -130,7 +130,7 @@ int convertBase(const int* decNum, unsigned int* detection, char* string)
 			string[i] = '1';
 		}
 
-		*detection >>= 1;
+		*detection >>= 1; // shift right 1 bit to check next bit
 	}
 
 	return 0; // if there is no error, return 0

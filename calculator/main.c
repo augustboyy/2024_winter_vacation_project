@@ -57,7 +57,7 @@ int main(void)
 				}
 
 			case vector_outerproduct:
-				check = outerProduct(); // function call for baseConversion
+				check = outerProduct(); // function call for outerProduct
 
 				if (check == 0) //error check, if error is not occured break the switch-case
 				{
@@ -70,7 +70,7 @@ int main(void)
 				}
 
 			case matrix:
-				check = calcMatrix(); // function call for baseConversion
+				check = calcMatrix(); // function call for calcMatrix
 
 				if (check == 0) //error check, if error is not occured break the switch-case
 				{
@@ -97,7 +97,7 @@ int main(void)
 		return 0;
 }
 
-void menuDisplay(char** menu, int menuCnt)
+void menuDisplay(char** menu, int menuCnt) // display menu
 {
 	int i;
 

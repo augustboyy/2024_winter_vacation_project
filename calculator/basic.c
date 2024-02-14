@@ -16,7 +16,7 @@ void charArrayClear(char* arr, int size) //reset array to NULL
 	return;
 }
 
-void intArrayClear(int* arr, int size) //reset array to NULL
+void intArrayClear(int* arr, int size) //reset array to 0
 {
 	int i;
 
@@ -28,7 +28,7 @@ void intArrayClear(int* arr, int size) //reset array to NULL
 	return;
 }
 
-void llArrayClear(ll* arr, int size) //reset array to NULL
+void llArrayClear(ll* arr, int size) //reset array to 0
 {
 	int i;
 
@@ -40,7 +40,7 @@ void llArrayClear(ll* arr, int size) //reset array to NULL
 	return;
 }
 
-void arraySetZero(char* arr, int size) //reset array to '0'
+void arraySetZero(char* arr, int size) //reset char array to '0'
 {
 	int i;
 

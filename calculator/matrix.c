@@ -9,21 +9,21 @@
 int calcMatrix(void)
 {
 	int matrixSize;
-	int c2x2Matrix[2][2];
-	int c3x3Matrix[3][3];
-	ll res;
+	int c2x2Matrix[2][2]; // 2x2 matrix
+	int c3x3Matrix[3][3]; // 3x3 matrix
+	ll res; // result of calculation considering overflow
 	int check;
 
 	for (;;)
 	{
 		check = 1;
-		check = matrixClear(c2x2Matrix, c3x3Matrix);
+		check = matrixClear(c2x2Matrix, c3x3Matrix); // reset matrix for using next time
 		res = 0;
 
 		if (check == 0)
 		{
 			check = 1;
-			check = getMenuMatrix(&matrixSize);
+			check = getMenuMatrix(&matrixSize); //user chooses calculate 2x2 or 3x3 matrix
 		}
 
 		else
@@ -36,7 +36,7 @@ int calcMatrix(void)
 			switch (matrixSize)
 			{
 				case two_X_two:
-					check = calc2x2Matrix(c2x2Matrix, &res);
+					check = calc2x2Matrix(c2x2Matrix, &res); 
 
 					if (check == 0)
 					{
@@ -106,12 +106,12 @@ int calc2x2Matrix(int(*c2x2Matrix)[2], ll*res)
 		printf("2x2 행렬을 계산합니다.\n");
 		print2DArrayExample(Example);
 
-		check = get2x2MatrixElement(c2x2Matrix, SIZEOF2X2);
+		check = get2x2MatrixElement(c2x2Matrix, SIZEOF2X2); // get 2x2 matrix element
 		print2DArray(c2x2Matrix);
 
 		if(check == 0)
 		{
-			*res = calculate(c2x2Matrix);
+			*res = calculate(c2x2Matrix); // calculate 2x2 matrix
 			printf("결과는 %lld입니다.\n", *res);
 
 			menu = inputIntForFunctionMenu();
@@ -158,7 +158,7 @@ int calc3x3Matrix(int(*c3x3Matrix)[3], ll* res)
 		printf("3x3 행렬을 계산합니다.\n");
 		print3DArrayExample(Example);
 
-		for(i = 0; i < SIZEOF3X3; i++)
+		for(i = 0; i < SIZEOF3X3; i++) // reset variables and arrays for using next time
 		{
 			intArrayClear(temp2x2Matrix[i][0], SIZEOF2X2);
 			intArrayClear(temp2x2Matrix[i][1], SIZEOF2X2);
@@ -170,14 +170,14 @@ int calc3x3Matrix(int(*c3x3Matrix)[3], ll* res)
 
 		if (check == 0)
 		{
-			div3x3Matrix(c3x3Matrix, temp2x2Matrix);
+			div3x3Matrix(c3x3Matrix, temp2x2Matrix); // divide 3x3 matrix to 2x2 matrix
 
 			for(i = 0; i < SIZEOF3X3; i++)
 			{
-				tempRes[i] = calculate(temp2x2Matrix[i]);
+				tempRes[i] = calculate(temp2x2Matrix[i]); // calculate 2x2 matrix
 			}
 
-			*res = c3x3Matrix[0][0] * tempRes[0] - c3x3Matrix[0][1] * tempRes[1] + c3x3Matrix[0][2] * tempRes[2];
+			*res = c3x3Matrix[0][0] * tempRes[0] - c3x3Matrix[0][1] * tempRes[1] + c3x3Matrix[0][2] * tempRes[2]; // calculate 3x3 matrix
 
 			printf("결과는 %lld입니다.\n", *res);
 
@@ -330,7 +330,7 @@ void print3DArray(int(*arr)[3])
 	return;
 }
 
-ll calculate(const int(*c2x2Matrix)[2])
+ll calculate(const int(*c2x2Matrix)[2]) // calculate 2x2 matrix
 {
 	ll res;
 
