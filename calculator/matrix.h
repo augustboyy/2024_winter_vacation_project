@@ -13,12 +13,15 @@ typedef enum MATRIXSIZE
 int calcMatrix(void);
 int getMenuMatrix(int* matrixSize);
 int calc2x2Matrix(int(*c2x2Matrix)[2], ll* res);
+int calc3x3Matrix(int(*c3x3Matrix)[3], ll* res);
 int get2x2MatrixElement(int(*c2x2Matrix)[2], int size);
 int get3x3MatrixElement(int(*c2x2Matrix)[3], int size);
-void print2DArrayExample(char(*arr)[4]);
-void print3DArrayExample(char(*arr)[5]);
+void print2DArrayExample(char* (*arr)[4]);
+void print3DArrayExample(char* (*arr)[5]);
 void print2DArray(int(*arr)[2]);
 void print3DArray(int(*arr)[3]);
+ll calculate(const int(*c2x2Matrix)[2]);
+void div3x3Matrix(const int(*c3x3Matrix)[3], int(*temp2x2Matrix)[2][2]);
 int matrixClear(int(*c2x2Matrix)[2], int(*c3x3Matrix)[3]);
 int inputIntForMatrixMenu(void);
-int inputIntForMatrix(void);
+int inputIntForMatrix(int j, int i);

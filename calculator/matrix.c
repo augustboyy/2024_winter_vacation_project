@@ -12,7 +12,7 @@ int calcMatrix(void)
 	int c2x2Matrix[2][2];
 	int c3x3Matrix[3][3];
 	ll res;
-	int check, menu;
+	int check;
 
 	for (;;)
 	{
@@ -49,6 +49,17 @@ int calcMatrix(void)
 					}
 
 				case three_X_three:
+					check = calc3x3Matrix(c3x3Matrix, &res);
+
+					if (check == 0)
+					{
+						goto RECALC;
+					}
+
+					else
+					{
+						goto ABNORMAL_BEHAVIER;
+					}
 					break;
 
 				case quit:
@@ -71,8 +82,6 @@ int calcMatrix(void)
 		RECALC:
 			;
 	}
-
-	return 0; // if there is no error, return 0
 }
 
 int getMenuMatrix(int* matrixSize)
@@ -86,7 +95,7 @@ int calc2x2Matrix(int(*c2x2Matrix)[2], ll*res)
 {
 	int check, menu;
 	char* Example[][4] = {
-		{"|", "a1", "a1", "|"},
+		{"|", "a1", "a2", "|"},
 		{"|", "b1", "b2", "|"},
 	};
 
@@ -102,7 +111,7 @@ int calc2x2Matrix(int(*c2x2Matrix)[2], ll*res)
 
 		if(check == 0)
 		{
-			*res = c2x2Matrix[0][0] * c2x2Matrix[1][1] - c2x2Matrix[0][1] * c2x2Matrix[1][0];
+			*res = calculate(c2x2Matrix);
 			printf("결과는 %lld입니다.\n", *res);
 
 			menu = inputIntForFunctionMenu();
@@ -127,6 +136,73 @@ int calc2x2Matrix(int(*c2x2Matrix)[2], ll*res)
 
 		RECALC:
 			;
+	}
+}
+
+int calc3x3Matrix(int(*c3x3Matrix)[3], ll* res)
+{
+	int check, menu;
+	int temp2x2Matrix[SIZEOF3X3][2][2];
+	ll tempRes[SIZEOF3X3];
+	char* Example[][5] = {
+		{"|", "a1", "a2", "a3", "|"},
+		{"|", "b1", "b2", "b3", "|"},
+		{"|", "c1", "c2", "c3", "|"}
+	};
+	int i;
+
+	for (;;)
+	{
+		check = 1;
+		system(CLEAR);
+		printf("3x3 행렬을 계산합니다.\n");
+		print3DArrayExample(Example);
+
+		for(i = 0; i < SIZEOF3X3; i++)
+		{
+			intArrayClear(temp2x2Matrix[i][0], SIZEOF2X2);
+			intArrayClear(temp2x2Matrix[i][1], SIZEOF2X2);
+			llArrayClear(tempRes, SIZEOF3X3);
+		}
+
+		check = get3x3MatrixElement(c3x3Matrix, SIZEOF3X3);
+		print3DArray(c3x3Matrix);
+
+		if (check == 0)
+		{
+			div3x3Matrix(c3x3Matrix, temp2x2Matrix);
+
+			for(i = 0; i < SIZEOF3X3; i++)
+			{
+				tempRes[i] = calculate(temp2x2Matrix[i]);
+			}
+
+			*res = c3x3Matrix[0][0] * tempRes[0] - c3x3Matrix[0][1] * tempRes[1] + c3x3Matrix[0][2] * tempRes[2];
+
+			printf("결과는 %lld입니다.\n", *res);
+
+			menu = inputIntForFunctionMenu();
+
+			if (menu == 1)
+			{
+				system(CLEAR);
+				goto RECALC;
+			}
+
+			else
+			{
+				system(CLEAR);
+				return 0; // if there is no error, return 0
+			}
+		}
+
+		else
+		{
+			return 1; // if there is an error, return 1
+		}
+
+	RECALC:
+		;
 	}
 }
 
@@ -254,6 +330,48 @@ void print3DArray(int(*arr)[3])
 	return;
 }
 
+ll calculate(const int(*c2x2Matrix)[2])
+{
+	ll res;
+
+	res = c2x2Matrix[0][0] * c2x2Matrix[1][1] - c2x2Matrix[0][1] * c2x2Matrix[1][0];
+
+	return res;
+}
+
+void div3x3Matrix(const int(*c3x3Matrix)[3], int(*temp2x2Matrix)[2][2])
+{
+	int i, iter1 = 0, iter2 = 0;
+
+	for (i = 0; i < SIZEOF3X3; i++)
+	{
+		if (i == 0)
+		{
+			iter1 = 1;
+			iter2 = 2;
+		}
+
+		else if(i == 1)
+		{
+			iter1 = 0;
+			iter2 = 2;
+		}
+
+		else
+		{
+			iter1 = 0;
+			iter2 = 1;
+		}
+
+		temp2x2Matrix[i][0][0] = c3x3Matrix[1][iter1];
+		temp2x2Matrix[i][0][1] = c3x3Matrix[1][iter2];
+		temp2x2Matrix[i][1][0] = c3x3Matrix[2][iter1];
+		temp2x2Matrix[i][1][1] = c3x3Matrix[2][iter2];
+	}
+
+	return;
+}
+
 int matrixClear(int(*c2x2Matrix)[2], int(*c3x3Matrix)[3])
 {
 	int i;
@@ -276,15 +394,18 @@ int inputIntForMatrixMenu(void)
 	int num = 0;
 	char* msg = "1. 2x2\n2. 3x3\n3. QUIT\n";
 
+	printf("%s", msg);
+
 	for (;;)
 	{
 		for (;;)
 		{
-			printf("%s", msg);
 			scanf("%d", &num);
 
 			if (getchar() != '\n')
 			{
+				system(CLEAR);
+				printf("%s", msg);
 				printf("다시 입력해주십시오.\n");
 				buffClear();
 			}
@@ -302,6 +423,8 @@ int inputIntForMatrixMenu(void)
 
 		else
 		{
+			system(CLEAR);
+			printf("%s", msg);
 			printf("다시 입력해주십시오.\n");
 		}
 	}

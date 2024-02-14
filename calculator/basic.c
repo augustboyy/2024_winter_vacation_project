@@ -28,6 +28,18 @@ void intArrayClear(int* arr, int size) //reset array to NULL
 	return;
 }
 
+void llArrayClear(ll* arr, int size) //reset array to NULL
+{
+	int i;
+
+	for (i = 0; i < size; i++)
+	{
+		arr[i] = 0;
+	}
+
+	return;
+}
+
 void arraySetZero(char* arr, int size) //reset array to '0'
 {
 	int i;
