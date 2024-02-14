@@ -7,6 +7,7 @@
 #include "menu.h" // declaration of menu enum
 #include "BigInt.h" // declaration of BigInt function
 #include "base_conversion.h" // dedeclaration of base_conversion function
+#include "vector_outerproduct.h" // declaration of vector_outerproduct function
 #include "matrix.h" // declaration of matrix function
 
 void menuDisplay(char** menu, int menuCnt);
@@ -16,7 +17,7 @@ void printWarningMsg(char** menu, int menuCnt);
 int main(void)
 {
 	int menuNum; // variable for save input menu number
-	char* menu[] = { "1. BigInt", "2. base conversion", "4. matrix", "5. QUIT" }; // array which is pointing menu string
+	char* menu[] = { "1. BigInt", "2. base conversion", "3. vector outerproduct", "4. matrix", "5. QUIT" }; // array which is pointing menu string
 	int menuCnt = SIZE(menu); // variable for save menu count
 	int check;
 
@@ -44,6 +45,19 @@ int main(void)
 
 			case base_conversion:				
 				check = baseConversion(); // function call for baseConversion
+
+				if (check == 0) //error check, if error is not occured break the switch-case
+				{
+					break;
+				}
+
+				else // if error is occured print error message and exit program
+				{
+					goto PRINT_ERROR;
+				}
+
+			case vector_outerproduct:
+				check = outerProduct(); // function call for baseConversion
 
 				if (check == 0) //error check, if error is not occured break the switch-case
 				{
