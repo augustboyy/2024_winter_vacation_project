@@ -1,5 +1,3 @@
-#pragma warning (disable : 4996) // for MSVC
-
 #include "basic.h"
 #include "vector_outerproduct.h"
 #include "matrix.h" // for calculate function

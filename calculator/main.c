@@ -1,5 +1,3 @@
-#pragma warning (disable : 4996) // for MSVC
-
 #include <stdio.h>
 #include <windows.h> // for system("cls")
 

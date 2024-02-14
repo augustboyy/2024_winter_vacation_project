@@ -1,4 +1,3 @@
-#pragma warning(disable: 4996) // for MSVC
 #include "basic.h"
 
 #include <stdio.h>
