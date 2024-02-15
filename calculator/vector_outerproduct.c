@@ -11,7 +11,6 @@ int outerProduct(void)
 	int check, menu;
 	ll resVector[3]; // save result vector considerig overflow
 	int temp2x2Matrix[3][2][2]; // save division of 3D vector
-	int i;
 
 	for (;;)
 	{
