@@ -48,7 +48,7 @@ int outerProduct(void)
 			}
 
 			else
-			{			
+			{
 				goto ABNORMAL_BEHAVIER;
 			}
 		}

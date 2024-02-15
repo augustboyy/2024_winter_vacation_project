@@ -84,12 +84,12 @@ int inputIntForBase(const char* msg)
 {
 	int num = 0;
 
-	for (;;) 
+	for (;;)
 	{
 		printf("%s", msg);
 		scanf("%d", &num);
 
-		if (getchar() != '\n') 
+		if (getchar() != '\n')
 		{
 			while (getchar() != '\n')
 			{
@@ -99,7 +99,7 @@ int inputIntForBase(const char* msg)
 			printf("잘못된 입력입니다.\n");
 		}
 
-		else 
+		else
 		{
 			break;
 		}

@@ -260,7 +260,7 @@ int get3x3MatrixElement(int(*c2x2Matrix)[3], int size)
 	return 0; // if there is no error, return 0
 }
 
-void print2DArrayExample(char*(*arr)[4]) 
+void print2DArrayExample(char*(*arr)[4])
 {
 	int i, j;
 
